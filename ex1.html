@@ -10,6 +10,14 @@
         font-weight: bold;
         color:red;
       }
+
+      #first{
+        color:green;
+      }
+
+      span{
+        color:blue;
+      }
     </style>
 
   </head>
@@ -23,8 +31,10 @@
       <input type="text" onkeydown="alert('key down!')">
       <br>
 
-      <span class="js">javascript</span> is good. <span class="js">javascript</span> is easy.
-      <span class="js">javascript</span> is perfect. <dir class="js">javascript is for web.</dir>
+      <span id="first" class="js">javascript</span> is <span>good</span>.
+      <span class="js">javascript</span> is easy.
+      <span class="js">javascript</span> is perfect.
+      <dir class="js">javascript is for <span>web</span>.</dir>
   </body>
 
 </html>
