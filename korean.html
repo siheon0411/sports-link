@@ -21,15 +21,16 @@
     }
   "> -->
 
-<!-- Refactoring by using 'this'-->
+<!-- Refactoring by using 'this'--> <!-- Refactoring by removing repetition -->
   <input type="button" value="dark mode" onclick="
+    var target = document.querySelector('body')
     if(this.value === 'dark mode') {
-      document.querySelector('body').style.backgroundColor = 'black';
-      document.querySelector('body').style.color = 'white';
+      target.style.backgroundColor = 'black';
+      target.style.color = 'white';
       this.value = 'light mode'
     } else {
-      document.querySelector('body').style.backgroundColor = 'white';
-      document.querySelector('body').style.color = 'black';
+      target.style.backgroundColor = 'white';
+      target.style.color = 'black';
       this.value = 'dark mode'
     }
   ">
