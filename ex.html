@@ -23,6 +23,7 @@
   </head>
 
   <body>
+
     <script>
       document.write('hi')
     </script>
@@ -35,6 +36,35 @@
       <span class="js">javascript</span> is easy.
       <span class="js">javascript</span> is perfect.
       <dir class="js">javascript is for <span>web</span>.</dir>
+
+
+      <h1>Loop</h1>
+      <h2>for</h2>
+      <script>
+        for(var i = 0; i < 4; i++) {
+          document.write('<li>i</li>');
+          document.write(i);
+        }
+      </script>
+      <h2>while</h2>
+      <script>
+        var i = 0;
+        while(i < 3) {
+          document.write(i);
+          i = i + 1;
+        }
+      </script>
+
+      <h1>Loop&Array</h1>
+      <script>
+        var coworkers = ['Kim', 'Lee', 'Park',' Choi'];
+        var i = 0;
+        while(i < coworkers.length) {
+          document.write('<li><a href="http://a.com/'+coworkers[i]+'">'+coworkers[i]+'</a></li>')
+          i = i + 1;
+        }
+      </script>
+
   </body>
 
 </html>
