@@ -8,16 +8,19 @@
 <body>
 
   <h1><a href="index.html">Sports Link</a></h1>
-    <p><a href="index.html"><strong>English</strong></a></p>
+  <a href="index.html"><strong>English</strong></a>
+  <input id="dark_light" type="button" value="dark mode" onclick="
+    if(document.querySelector('#dark_light').value === 'dark mode') {
+      document.querySelector('body').style.backgroundColor = 'black';
+      document.querySelector('body').style.color = 'white';
+      document.querySelector('#dark_light').value = 'light mode'
+    } else {
+      document.querySelector('body').style.backgroundColor = 'white';
+      document.querySelector('body').style.color = 'black';
+      document.querySelector('#dark_light').value = 'dark mode'
+    }
+  ">
 
-  <input type="button" value="Dark mode" onclick="
-    document.querySelector('body').style.backgroundColor = 'black';
-    document.querySelector('body').style.color = 'white';
-  ">
-  <input type="button" value="Light Mode" onclick="
-    document.querySelector('body').style.backgroundColor = 'white';
-    document.querySelector('body').style.color = 'black';
-  ">
   <ol>
     <li><a href="1.html">축구</a></li>
     <li><a href="2.html">야구</a></li>
