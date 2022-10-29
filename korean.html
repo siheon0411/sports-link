@@ -21,6 +21,18 @@
     }
   ">
 
+  <input type="button" value="dark mode" onclick="
+    if(this.value === 'dark mode') {
+      document.querySelector('body').style.backgroundColor = 'black';
+      document.querySelector('body').style.color = 'white';
+      this.value = 'light mode'
+    } else {
+      document.querySelector('body').style.backgroundColor = 'white';
+      document.querySelector('body').style.color = 'black';
+      this.value = 'dark mode'
+    }
+  ">
+
   <ol>
     <li><a href="1.html">축구</a></li>
     <li><a href="2.html">야구</a></li>
