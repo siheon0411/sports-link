@@ -3,53 +3,14 @@
 <head>
   <title>Sports Link Korea</title>
   <meta charset="utf-8">
-
-  <script>
-  var Links = {
-    setColor:function(color) {
-      var alist = document.querySelectorAll('a');
-      var i = 0;
-      while(i < alist.length) {
-        alist[i].style.color = color;
-        i = i + 1;
-      }
-    }
-  }
-
-  var Body = {
-    setColor:function(color) {
-      document.querySelector('body').style.color = color;
-    },
-    setBackgroundColor:function(color) {
-      document.querySelector('body').style.backgroundColor = color;
-    }
-  }
-
-  function darkmodeHandler(self) {
-    var target = document.querySelector('body');
-    if(self.value === 'dark mode') {
-      Body.setBackgroundColor('black');
-      Body.setColor('white');
-      self.value = 'light mode';
-      Links.setColor('powderblue');
-      } else {
-      Body.setBackgroundColor('white');
-      Body.setColor('black');
-      self.value = 'dark mode';
-      Links.setColor('blue');
-      }
-    }
-  </script>
-
+  <script src="colors.js"></script>
 </head>
 
 <body>
 
   <h1><a href="index.html">Sports Link</a></h1>
   <a href="index.html"><strong>English</strong></a>
-  <input type="button" value="dark mode" onclick="
-    darkmodeHandler(this);
-  ">
+  <input type="button" value="dark mode" onclick="darkmodeHandler(this);">
 
   <ol>
     <li><a href="1.html">축구</a></li>
