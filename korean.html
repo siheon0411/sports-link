@@ -3,52 +3,46 @@
 <head>
   <title>Sports Link Korea</title>
   <meta charset="utf-8">
+
+  <script>
+    function darkmodeHandler(self) {
+      var target = document.querySelector('body');
+      if(self.value === 'dark mode') {
+        target.style.backgroundColor = 'black';
+        target.style.color = 'white';
+        self.value = 'light mode';
+
+        var alist = document.querySelectorAll('a');
+        var i = 0;
+        while(i < alist.length) {
+          alist[i].style.color = 'powderblue';
+          i = i + 1;
+        }
+
+      } else {
+        target.style.backgroundColor = 'white';
+        target.style.color = 'black';
+        self.value = 'dark mode';
+
+        var alist = document.querySelectorAll('a');
+        var i = 0;
+        while(i < alist.length) {
+          alist[i].style.color = 'blue';
+          i = i + 1;
+        }
+
+      }
+    }
+  </script>
+
 </head>
 
 <body>
 
   <h1><a href="index.html">Sports Link</a></h1>
   <a href="index.html"><strong>English</strong></a>
-  <!-- <input id="dark_light" type="button" value="dark mode" onclick="
-    if(document.querySelector('#dark_light').value === 'dark mode') {
-      document.querySelector('body').style.backgroundColor = 'black';
-      document.querySelector('body').style.color = 'white';
-      document.querySelector('#dark_light').value = 'light mode'
-    } else {
-      document.querySelector('body').style.backgroundColor = 'white';
-      document.querySelector('body').style.color = 'black';
-      document.querySelector('#dark_light').value = 'dark mode'
-    }
-  "> -->
-
-<!-- Refactoring by using 'this'--> <!-- Refactoring by removing repetition -->
   <input type="button" value="dark mode" onclick="
-    var target = document.querySelector('body');
-    if(this.value === 'dark mode') {
-      target.style.backgroundColor = 'black';
-      target.style.color = 'white';
-      this.value = 'light mode';
-
-      var alist = document.querySelectorAll('a');
-      var i = 0;
-      while(i < alist.length) {
-        alist[i].style.color = 'powderblue';
-        i = i + 1;
-      }
-
-    } else {
-      target.style.backgroundColor = 'white';
-      target.style.color = 'black';
-      this.value = 'dark mode';
-
-      var alist = document.querySelectorAll('a');
-      var i = 0;
-      while(i < alist.length) {
-        alist[i].style.color = 'blue';
-        i = i + 1;
-      }
-
-    }
+    darkmodeHandler(this);
   ">
 
   <ol>
