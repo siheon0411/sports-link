@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
     <script src="colors.js"></script>
     <title>Game</title>
-  </head>
+</head>
 
-  <body>
+<body>
 
     <h1><a href="index.html">Sports Link</a></h1>
     <a href="korean.html"><strong>한국</strong></a>
@@ -16,17 +16,17 @@
     <span>Total Clicks: 0</span>
     <button id="btn">Click me</button>
 
-  </body>
+</body>
 
-  <script>
+<script>
     let counter = 0;
     const button = document.getElementById("btn");
     const span = document.querySelector("span");
     function handleClick() {
-      counter = counter + 1;
-      span.innerText = `Total Clicks: ${counter}`;
+    counter = counter + 1;
+    span.innerText = `Total Clicks: ${counter}`;
     }
     button.addEventListener("click", handleClick);
-  </script>
+</script>
 
 </html>
