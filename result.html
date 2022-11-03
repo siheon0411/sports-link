@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>result</title>
+
+    <style>
+		header {
+			background-color:lightgrey;
+			height:100px;
+		}
+		nav {
+			background-color:#339999;
+			color:white;
+			height:100px;
+			float:center;
+		}
+        aside {
+            background-color: blueviolet;
+			height:100px;
+			width:200px;
+			text-align:left;
+			float:left;
+			padding:10px;
+		}
+		section {
+			width:200px;
+			text-align:left;
+			float:right;
+			padding:10px;
+		}
+		footer {
+			background-color:#FFCC00;
+			height:100px;
+			clear:both;
+		}
+		header, nav, section, footer { text-align:center; }
+		header, footer { line-height:100px; }
+		nav, section { line-height:240px; }
+	</style>
+</head>
+
+<body>
+
+    <header>
+        <h1>검색결과</h1>
+    </header>
+
+    <nav>
+        <div style="display:inline-block;"><a href="index.html">메인페이지</a></div>
+        <div style="display:inline-block;"><a href="left.html">left페이지</a></div>
+        <div style="display:inline-block;">로그아웃</div> <br>
+        
+    </nav>
+
+    <aside>
+        <div><button>경로 추천받기</button></div>
+        <div><button id="btnTv" onclick="travelSelect()">여행</button></div>
+
+        <script>
+            function travelSelect() {
+                alert("여행을 선택했습니다");
+            }
+        </script>
+
+        <div>여행1</div>
+        <div>여행2</div>
+        <div>여행3</div>
+        <div>여행4</div>
+        <div>여행5</div>
+
+    </aside>
+
+    <section>
+        <h2>여행정보</h2>
+    </section>
+
+    <footer>
+        <div>2022-itm</div>
+    </footer>
+</body>
+
+</html>
