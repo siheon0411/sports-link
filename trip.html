@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>trip</title>
+    <!-- bootstrap setting for CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="result.css">
+    <link rel="stylesheet" href="trip.css">
+
+</head>
+
+<body>
+    <!-- firebase setting -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-storage.js"></script>
+    
+    <!-- bootstrap setting for javascipt -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+    <!-- jQuery setting  -->
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    
+    <script>
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyAqd7iObVzJSpTDRmCE3D_9wIaE8ba7BME",
+            authDomain: "myroute-itm.firebaseapp.com",
+            databaseURL: "https://myroute-itm-default-rtdb.firebaseio.com",
+            projectId: "myroute-itm",
+            storageBucket: "myroute-itm.appspot.com",
+            messagingSenderId: "95192175197",
+            appId: "1:95192175197:web:de576c298ff7ccc479b3b4",
+            measurementId: "G-8CZHBDVGZE"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+    </script>    
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html" style="font-size: 25px; font-weight: bold;">myRoute</a>
+            <div style="margin-left: 20px; font-size: 18px; color: white;">장바구니 불러와서 여행루트 짜기</div>
+    
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <!-- <a class="nav-link active" aria-current="page" href="#">Home</a> -->
+                    <a class="nav-link" id="btn_mypage" href="mypage.html" style="font-size: 18px; color: white;">마이페이지</a>
+                    <a class="nav-link" id="btn_login_out" href="login.html" style="font-size: 18px; color: white;">로그인</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="wrapper">
+        <div class="verticalbox">
+    
+            <div id="wrapper2">
+                <div id="color_bar">
+    
+                    <button class="btn result">goback to Result</button>
+                    <div id="result_bar">장바구니 리스트
+                        <script>
+                            if (localStorage.getItem('search')) {
+                                var searchResult = localStorage.getItem('search');
+                            }
+                            $('#result_bar').html(searchResult + ' 장바구니 리스트');
+                            console.log(searchResult);
+                        </script>
+                    </div>
+                    <button class="btn map">go to Map</button>
+    
+                </div>
+            </div>
+    
+            <div id="wrapper3">
+                <div class="horizontalbox">
+    
+                    <div id="menu">
+                        <div id="side_bar">
+                            
+                        </div>
+                    </div>
+    
+                    <div id="contents">
+                        <!-- <div class="item" draggable="true" ondragstart="dragstart(event)">광화문</div>
+                        <div class="item" draggable="true" ondragstart="dragstart(event)">롯데월드</div>
+                    </div> -->
+
+                </div>
+    
+            </div>
+    
+        </div>
+    
+    </div>
+
+
+    <script>
+
+        const db = firebase.firestore();
+
+        //유저 정보 확인
+        var userInfo = localStorage.getItem('user');
+        var userNickname = JSON.parse(userInfo).displayName;
+        var userEmail = JSON.parse(userInfo).email;
+
+        if (userNickname == null) {
+            $('#btn_mypage').html(userEmail);
+        } else {
+            $('#btn_mypage').html(userNickname);
+        }
+
+        $('#btn_login_out').html('로그아웃');
+        $('#btn_login_out').click(function () {
+            firebase.auth().signOut();
+            localStorage.removeItem('user');
+            console.log('logout');
+            alert('로그아웃 되었습니다.')
+        })
+
+
+        //firestore basket_users / basket 컬렉션 document들 불러오기
+        db.collection(userEmail).doc('basket').collection('basket').get().then((snapshot) => {
+            snapshot.forEach((doc) => {
+
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'item';
+                itemDiv.setAttribute("draggable", "true");
+                itemDiv.setAttribute("ondragstart", "dragstart(event)");
+                itemDiv.textContent = doc.data().name;
+                $('#contents').append(itemDiv);
+            })
+        })
+
+
+
+        //tripName 클릭시 해당 여행의 map.html로 넘어가게 쿼리스트링 사용
+        function goToMap(event) {
+            let txt = event.target.innerText;
+
+
+            window.location.href = '/map.html?'+ txt;
+
+        }
+
+        $('.result').click(function () {
+            window.location.href = '/result.html';
+        })
+
+        /*var queryString = new URLSearchParams(window.location.search);
+        db.collection(userEmail).doc(queryString.get('id')).get().then((result) => {
+            console.log(result.data());
+        }) */
+
+        $('.map').click(function () {
+            window.location.href = '/map.html';
+        })
+        
+
+    </script>
+
+</body>
+
+<script>
+
+    function allowDrop(event) {
+        event.preventDefault();
+    }
+
+    function dragstart(event) {
+        event.dataTransfer.setData("text", event.target.innerText);
+    };
+
+    function drop(event) {
+        event.preventDefault();
+        const txt = event.dataTransfer.getData("text");
+        let tmp;
+        let item;
+
+        db.collection(userEmail).doc('basket').collection('basket').get().then((result => {
+            result.forEach(( x => {
+                if(x.data().name == txt) {
+                    item = makeItem(x);
+                    if(event.target.className == "trip") {
+                        tmp = event.target;
+                    } else if (event.target.className == "sub" || event.target.className == "main") {
+                        tmp = event.target.parentElement;
+                    }
+                    tmp.appendChild(createSub(txt));
+                    db.collection(userEmail).doc(tmp.innerText.split("\n")[0]).collection('basket').doc(item.name).set(item);
+                }
+            }))
+        }))
+    }
+
+
+    function deleteSub(event) {
+        db.collection(userEmail).doc(event.target.parentElement.innerText.split("\n")[0]).collection('basket').doc(event.target.innerText).delete();
+        event.target.remove();
+    }
+
+    function makeItem(x) {
+        return {
+            address : x.data().address,
+            name : x.data().name,
+            latitude : x.data().latitude,
+            longtitude : x.data().longtitude,
+            phone : x.data().phone,
+            location : new firebase.firestore.GeoPoint(x.data().latitude, x.data().longtitude)
+        }
+    }
+
+    function createSub(txt) {
+        const subDiv = document.createElement("div");
+        subDiv.className = "sub";
+        subDiv.setAttribute('ondragstart', 'dragstart(event)');
+        subDiv.setAttribute('ondragover', 'allowDrop(event)');
+        subDiv.setAttribute('draggable', 'true');
+        subDiv.setAttribute('onclick', 'deleteSub(event)');
+        subDiv.textContent = txt;
+        return subDiv;
+    }
+
+    function createMain(txt) {
+        const mainDiv = document.createElement("div");
+        mainDiv.className = "main";
+        mainDiv.textContent = txt;
+        mainDiv.setAttribute('onClick', 'goToMap(event)');
+        return mainDiv;
+    }
+
+    function createTrip() {
+        const tripDiv = document.createElement('div');
+        tripDiv.className = "trip";
+        tripDiv.setAttribute('ondrop', 'drop(event)');
+        tripDiv.setAttribute('ondragover', 'allowDrop(event)');
+        return tripDiv;
+    }
+
+    function accessDBandViewTrip(userEmail) {
+        let key = [];
+
+        db.collection(userEmail).get().then((res => {
+            res.forEach(( x => {
+                if(x.data().tripName !== "basket") {
+                    key.push(x.data().tripName);
+                }
+            }))
+
+            for(let i in key) {
+                if(i == 0) {
+                    continue;
+                }
+                const bar = document.getElementById("side_bar");
+                const tripDiv = createTrip();
+
+                tripDiv.appendChild(createMain(key[i]));
+    
+                db.collection(userEmail).doc(key[i]).collection('basket').get().then((result =>{
+                    result.forEach(( x => {
+                        tripDiv.appendChild(createSub(x.data().name));
+                    }))
+                }))
+                
+                bar.appendChild(tripDiv);
+            }
+        }))
+    }
+    
+    accessDBandViewTrip(userEmail);
+</script>
+
+</html>
